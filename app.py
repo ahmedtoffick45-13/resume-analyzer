@@ -35,5 +35,6 @@ def job():
 def match():
     return render_template('match_result.html')
 
-# ❗ VERY IMPORTANT FOR RENDER
-app = app
+# ✅ VERY IMPORTANT FOR RENDER
+if __name__ == "__main__":
+    app.run(debug=True)
