@@ -29,18 +29,22 @@ def upload():
         file = request.files.get('resume')
 
         if file:
-            return redirect('/job')   # next page
+            return redirect('/job')
         else:
             return "No file selected"
 
     return render_template('upload.html')
 
 
-# Job Matcher (FIXED ✅)
+# Job Matcher
 @app.route('/job', methods=['GET', 'POST'])
 def job():
     if request.method == 'POST':
         skills = request.form.get('skills')
+
+        # ✅ SAFETY FIX
+        if not skills:
+            return "Please enter skills"
 
         skills_list = [s.strip().lower() for s in skills.split(',')]
 
@@ -52,20 +56,20 @@ def job():
 
         results = {}
 
-        for job, req_skills in jobs.items():
+        for job_name, req_skills in jobs.items():
             match = len(set(skills_list) & set(req_skills))
             percent = int((match / len(req_skills)) * 100)
-            results[job] = percent
+            results[job_name] = percent
 
         return render_template('match_result.html', results=results)
 
     return render_template('job.html')
 
 
-# Result page (optional direct access)
+# Optional route
 @app.route('/match')
 def match():
-    return render_template('match_result.html')
+    return render_template('match_result.html', results={})
 
 
 # Run app (local only)
