@@ -19,13 +19,16 @@ def login():
 
     return render_template('login.html')
 
-@app.route('/register')
-def register():
-    return render_template('register.html')
-
-# 🔥 FIX HERE (IMPORTANT)
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
+    if request.method == 'POST':
+        file = request.files.get('resume')
+
+        if file:
+            return redirect('/job')   # 👈 next page
+        else:
+            return "No file selected"
+
     return render_template('upload.html')
 
 @app.route('/job')
@@ -36,6 +39,5 @@ def job():
 def match():
     return render_template('match_result.html')
 
-# ✅ FOR LOCAL RUN
 if __name__ == "__main__":
     app.run(debug=True)
