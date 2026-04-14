@@ -23,7 +23,8 @@ def login():
 def register():
     return render_template('register.html')
 
-@app.route('/upload')
+# 🔥 FIX HERE (IMPORTANT)
+@app.route('/upload', methods=['GET', 'POST'])
 def upload():
     return render_template('upload.html')
 
@@ -35,6 +36,6 @@ def job():
 def match():
     return render_template('match_result.html')
 
-# ✅ VERY IMPORTANT FOR RENDER
+# ✅ FOR LOCAL RUN
 if __name__ == "__main__":
     app.run(debug=True)
